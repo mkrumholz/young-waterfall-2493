@@ -9,4 +9,11 @@ class Actor < ApplicationRecord
         .order(age: :desc)
         .distinct
   end
+
+  def coactors
+    Actor.find_by_sql("select distinct(name) from actors 
+                        left join cast_members on cast_members.actor_id = actors.id 
+                        where movie_id in (select movie_id from cast_members where actor_id = #{id})
+                        and actors.id != #{id}")
+  end
 end

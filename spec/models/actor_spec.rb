@@ -6,7 +6,7 @@ RSpec.describe Actor do
     it { should have_many(:movies).through(:cast_members) }   
   end
 
-  describe 'class methods' do
+  describe 'behaviors' do
     before :each do
       @studio = Studio.create!(name: 'Universal Studios', location: 'Hollywood')
 
@@ -23,11 +23,23 @@ RSpec.describe Actor do
       @actor_5 = @movie_5.actors.create!(name: 'Lea Thompson', age: 60, currently_working: true)
 
       @movie_2.actors << @actor_4
+      @movie_5.actors << @actor_2
     end
 
     describe '.studio_list' do
       it 'returns a list of unique, currently working actors for given studio id listed by age desc' do
         expect(Actor.studio_list(@studio.id)).to eq [@actor_4, @actor_3, @actor_5, @actor_2]
+      end
+    end
+
+    describe '#coactors' do
+      it 'returns a list of unique actors this actor has worked with across all films' do
+        names = @actor_4.coactors.pluck(:name)
+        expect(names).to include @actor_2.name
+        expect(names).to include @actor_3.name
+        expect(names).to include @actor_5.name
+        expect(names).to_not include @actor_4.name
+        expect(names).to_not include @actor_1.name
       end
     end
   end
