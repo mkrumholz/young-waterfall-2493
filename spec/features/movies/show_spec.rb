@@ -29,5 +29,12 @@ RSpec.describe 'The movie show page' do
     expect(page).to have_content 'Genre: Sci-Fi'
   end
 
-  it 'displays a list of the cast members'
+  it 'displays a list of the cast members' do
+    visit "/movies/#{@movie_5.id}"
+    
+    expect(page).to have_content 'Christopher Lloyd'
+    expect(page).to have_content 'Lea Thompson'
+    expect(page).to have_content 'Michael J. Fox'
+    expect(page).to have_content 'Claudia Wells'
+  end
 end
