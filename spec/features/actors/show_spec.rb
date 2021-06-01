@@ -15,6 +15,7 @@ RSpec.describe 'The movie show page' do
     @actor_5 = @movie_3.actors.create!(name: 'Michael J. Fox', age: 59, currently_working: false)
     @actor_6 = @movie_3.actors.create!(name: 'Claudia Wells', age: 54, currently_working: true)
 
+    @movie_2.actors << @actor_2
     @movie_1.actors << @actor_3
     @movie_2.actors << @actor_3
   end
@@ -26,5 +27,13 @@ RSpec.describe 'The movie show page' do
     expect(page).to have_content 'Age: 82'
   end
 
-  it 'has a list of all actors this actor has worked with'
+  it 'has a list of all actors this actor has worked with' do
+    visit "/actors/#{@actor_3.id}"
+    
+    expect(page).to have_content('Samuel L. Jackson', count: 1)
+    expect(page).to have_content 'Harrison Ford'
+    expect(page).to have_content 'Lea Thompson'
+    expect(page).to have_content 'Michael J. Fox'
+    expect(page).to have_content 'Claudia Wells'
+  end
 end 
