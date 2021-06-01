@@ -3,6 +3,8 @@
 <p>Year created: <%= @movie.creation_year %></p>
 <p>Genre: <%= @movie.genre %></p>
 
+<h3>All Actors</h3>
+
 <% @actors.each do |actor| %>
   <p><%= actor.name %></p>
 <% end %>
