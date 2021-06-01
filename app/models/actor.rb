@@ -11,9 +11,10 @@ class Actor < ApplicationRecord
   end
 
   def coactors
-    Actor.find_by_sql("select distinct(name) from actors 
-                        left join cast_members on cast_members.actor_id = actors.id 
-                        where movie_id in (select movie_id from cast_members where actor_id = #{id})
-                        and actors.id != #{id}")
+    Actor.joins(:cast_members)
+         .select(:name)
+         .where("movie_id in (select movie_id from cast_members where actor_id = ?)", id)
+         .where.not(actors: {id: id})
+         .distinct
   end
 end
