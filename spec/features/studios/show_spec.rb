@@ -40,11 +40,6 @@ RSpec.describe 'The studio show page' do
     visit "/studios/#{@studio.id}"
     
     expect(page).to_not have_content 'Harrison Ford'
-    # expect(page).to have_content 'Laura Dern'
-    # expect(page).to have_content 'Samuel L. Jackson'
-    # expect(page).to have_content 'Christopher Lloyd'
-    # expect(page).to have_content 'Lea Thompson'
-
     expect(@actor_4.name).to appear_before(@actor_3.name)
     expect(@actor_3.name).to appear_before(@actor_5.name)
     expect(@actor_5.name).to appear_before(@actor_2.name)
