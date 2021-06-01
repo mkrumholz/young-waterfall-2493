@@ -2,6 +2,6 @@ class StudiosController < ApplicationController
   def show
     @studio = Studio.find(params[:id])
     @movies = @studio.movies
-    @actors = Actor.studio_list(@studio.id)
+    @actors = @studio.actor_list
   end
 end
