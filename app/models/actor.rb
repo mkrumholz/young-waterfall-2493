@@ -1,5 +1,5 @@
 class Actor < ApplicationRecord
-  has_many :cast_members
+  has_many :cast_members, dependent: :destroy
   has_many :movies, through: :cast_members
 
   def self.studio_list(studio_id)
